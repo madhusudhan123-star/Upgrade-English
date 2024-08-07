@@ -4,6 +4,7 @@ import Image from "next/image";
 import Modal from 'react-modal';
 import Navbar from '@/components/navbar';
 import Tour from './tour';
+import { AlertCircle } from 'lucide-react';
 
 const Page = () => {
   const [isRotating, setIsRotating] = useState(false);
@@ -23,17 +24,25 @@ const Page = () => {
   const [message, setMessage] = useState('');
   const [submitStatus, setSubmitStatus] = useState('');
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [microphonePermission, setMicrophonePermission] = useState('prompt');
+
 
   useEffect(() => {
     setIsMounted(true);
+    if (navigator.permissions && navigator.permissions.query) {
+      navigator.permissions.query({ name: 'microphone' }).then((permissionStatus) => {
+        setMicrophonePermission(permissionStatus.state);
+        permissionStatus.onchange = () => {
+          setMicrophonePermission(permissionStatus.state);
+        };
+      });
+    }
     // Check if it's the first visit
     const isFirstVisit = localStorage.getItem('isFirstVisit') !== 'false';
     if (isFirstVisit) {
       setRunTour(true);
       localStorage.setItem('isFirstVisit', 'false');
     }
-    // setShowSharePopup(true);
-    // Show popup only if it hasn't been submitted before
     const hasSubmittedBefore = localStorage.getItem('hasSubmitted') === 'true';
     if (!hasSubmittedBefore) {
       setShowSharePopup(true);
@@ -43,46 +52,6 @@ const Page = () => {
     const intervalId = setInterval(() => {
       setShowSharePopup(true);
     }, 5 * 60 * 1000); // 5 minutes in milliseconds
-
-    // Clean up interval on component unmount
-    return () => clearInterval(intervalId);
-  }, []);
-  const handleEmailChange = (e) => {
-    setEmail(e.target.value);
-  };
-  const handleMessageChange = (e) => {
-    setMessage(e.target.value);
-  };
-  const handleShareSubmit = async (e) => {
-    e.preventDefault();
-    setSubmitStatus('Submitting...');
-    try {
-      const response = await fetch('/pages/submit-review', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ email, message }),
-      });
-
-      const data = await response.json();
-
-      if (response.ok) {
-        setSubmitStatus('Review submitted successfully!');
-        setEmail('');
-        setMessage('');
-        setShowSharePopup(false);
-        setHasSubmitted(true);
-        localStorage.setItem('hasSubmitted', 'true');
-      } else {
-        setSubmitStatus(`Failed to submit review: ${data.error}`);
-      }
-    } catch (error) {
-      console.error('Error submitting review:', error);
-      setSubmitStatus(`An error occurred: ${error.message}`);
-    }
-  };
-  useEffect(() => {
     if (typeof window !== 'undefined' && ('SpeechRecognition' in window || 'webkitSpeechRecognition' in window)) {
       const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
       recognitionRef.current = new SpeechRecognition();
@@ -100,38 +69,40 @@ const Page = () => {
         console.error('Speech recognition error', event.error);
       };
     }
+    setIsRotating(false);
 
     return () => {
+      clearInterval(intervalId);
       if (recognitionRef.current) {
         recognitionRef.current.stop();
       }
     };
-  }, []);
+  }, [isRotating1]);
 
-  const handleTranscriptChange = useCallback((event) => {
+  const handleTranscriptChange = (event) => {
     setIsEdited(true);
     setEditableTranscript(event.target.value);
-  }, []);
+  };
 
-  const startListening = useCallback(() => {
+  const startListening = () => {
     if (recognitionRef.current) {
       recognitionRef.current.start();
       setListening(true);
     }
-  }, []);
+  };
 
-  const stopListening = useCallback(() => {
+  const stopListening = () => {
     if (recognitionRef.current) {
       recognitionRef.current.stop();
       setListening(false);
       setStartanalyze(true);
     }
-  }, []);
+  };
 
-  const analyzeText = useCallback(() => {
+  const analyzeText = () => {
     const contentAnalysis = analyzeContent(editableTranscript);
     setReview(contentAnalysis);
-  }, [editableTranscript]);
+  };
 
   const getReviewColor = (rating) => {
     if (rating < 5) return 'text-red-500';
@@ -151,7 +122,7 @@ const Page = () => {
     );
   };
 
-  const analyzeContent = useCallback((text) => {
+  const analyzeContent = (text) => {
     if (startanalyze) {
       if (!text || typeof text !== 'string' || text.trim().length === 0) {
         return "No valid speech detected. Please provide some input for analysis.";
@@ -263,9 +234,9 @@ const Page = () => {
     } else {
       alert('Please stop the recording');
     }
-  }, [startanalyze]);
+  };
 
-  const Resetall = useCallback(() => {
+  const Resetall = () => {
     setTrackhistory(prev => [...prev, review]);
     setReview('');
     setEditableTranscript('');
@@ -273,7 +244,7 @@ const Page = () => {
       recognitionRef.current.stop();
     }
     setListening(false);
-  }, [review]);
+  };
 
   const toggleRotation = useCallback(() => {
     if (!isRotating) {
@@ -287,10 +258,6 @@ const Page = () => {
   const toggleRotation1 = useCallback(() => {
     setIsRotating1(prev => !prev);
   }, []);
-
-  useEffect(() => {
-    setIsRotating(false);
-  }, [isRotating1]);
 
   if (typeof window !== 'undefined' && !('SpeechRecognition' in window || 'webkitSpeechRecognition' in window)) {
     return <span>Browser doesn't support speech recognition.</span>;
@@ -431,16 +398,28 @@ const Page = () => {
                   </div>
                 </div>
               </div>
+              {microphonePermission === 'prompt' && (
+                <p className="text-center mb-4">Click the CD to enable microphone access</p>
+              )}
+              {microphonePermission === 'denied' && (
+                <div className="fixed w-[100vw] h-[100vh] bg-black/75 top-0 left-0 flex justify-center items-center backdrop-blur-sm cursor-not-allowed">
+                  <div className="bg-white rounded-lg p-8 max-w-md text-center shadow-lg">
+                    <AlertCircle className="text-red-500 w-16 h-16 mx-auto mb-4" />
+                    <p className="text-2xl font-bold mb-4 text-red-500">Microphone Access Denied</p>
+                    <p className="text-gray-700">Please enable it in your browser settings.</p>
+                  </div>
+                </div>
+              )}
               <div className='flex flex-col items-center mt-8'>
                 <textarea
                   value={editableTranscript}
                   onChange={handleTranscriptChange}
-                  className="transcript-output w-full spoken_text glass-background  h-48 p-4 rounded-lg shadow-md mb-4"
+                  className={`transcript-output w-full spoken_text glass-background  h-48 p-4 rounded-lg shadow-md mb-4 ${microphonePermission === 'denied' ? "hidden" : "block"}`}
                   placeholder="Your speech transcript will appear here..."
                 />
                 <button
                   onClick={analyzeText}
-                  className="analyze-button glass-background font-bold py-5 px-5 rounded"
+                  className={`analyze-button glass-background font-bold py-5 px-5 rounded ${microphonePermission === 'denied' ? "hidden" : "block"}`}
                 >
                   Analyze Speech
                 </button>
@@ -469,9 +448,9 @@ const Page = () => {
           </Modal>
           <SharePopup />
           <Tour run={runTour} setRun={setRunTour} />
-        </div>
+        </div >
       )}
-    </div>
+    </div >
   );
 };
 
