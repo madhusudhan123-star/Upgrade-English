@@ -111,16 +111,20 @@
 // //         });
 // //     }
 // // }
-
 import { NextResponse } from 'next/server';
 import { connectToDB } from "@/components/database";
 import User from "@/components/user";
+
+let isConnected = false;
 
 export async function POST(request) {
     try {
         const { email, message } = await request.json();
 
-        await connectToDB();
+        if (!isConnected) {
+            await connectToDB();
+            isConnected = true;
+        }
 
         const newUser = new User({ email, review: message });
         await newUser.save();
