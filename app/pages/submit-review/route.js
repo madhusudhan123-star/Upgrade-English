@@ -20,6 +20,9 @@
 import { connectToDB } from "@/components/database";
 import User from "@/components/user";
 import { NextResponse } from 'next/server';
+var cors = require('cors')
+app.use(cors())
+
 
 export async function POST(request) {
     try {
