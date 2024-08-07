@@ -26,7 +26,7 @@ const page = () => {
         setSubmitStatus('Sending...');
 
         try {
-            const response = await fetch('/pages/api', {
+            const response = await fetch('/pages/api/contact', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

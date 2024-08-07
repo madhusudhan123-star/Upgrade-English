@@ -31,8 +31,8 @@ const Navbar = ({ onMobileMenuToggle }) => {
                     <h1><a href='/'>UPG口ADE<br />ENGलिSH</a></h1>
                 </div>
                 <div className='flex gap-20 '>
-                    <p> <a href="/product">Start Pratice</a></p>
-                    <p><a href="/about">About developer</a></p>
+                    <p> <a href="/product">Start Exercise</a></p>
+                    <p><a href="/about">Meet the Developer</a></p>
                     <p><a href="/contact">Contact</a></p>
 
                 </div>
@@ -64,8 +64,8 @@ const Navbar = ({ onMobileMenuToggle }) => {
                                 </button>
                             </div>
                             <div className='text-[#FFE32B] w-screen h-full leading-relaxed mt-10 text-[50px]'>
-                                <p><a href="/product">START PRACTICE </a></p>
-                                <p><a href="/about"> ABOUT DEVELOPER </a></p>
+                                <p><a href="/product">START EXERCISE </a></p>
+                                <p><a href="/about"> MEET THE DEVELOPER </a></p>
                                 <p><a href="/contact">CONTACT</a></p>
                             </div>
                         </div>

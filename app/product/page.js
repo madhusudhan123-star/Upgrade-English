@@ -45,7 +45,9 @@ const Page = () => {
     }
     const hasSubmittedBefore = localStorage.getItem('hasSubmitted') === 'true';
     if (!hasSubmittedBefore) {
+      console.log(showSharePopup);
       setShowSharePopup(true);
+      localStorage.setItem('hasSubmitted', 'true');
     }
 
     // Set up interval for showing share popup every 5 minutes
@@ -77,7 +79,9 @@ const Page = () => {
 
   useEffect(() => {
     const intervalId = setInterval(() => {
+      localStorage.setItem('hasSubmitted', 'false');
       setShowSharePopup(true);
+
     }, 5 * 60 * 1000); // 5 minutes in milliseconds
 
 
@@ -301,7 +305,7 @@ const Page = () => {
       e.preventDefault();
       setLocalSubmitStatus('Submitting...');
       try {
-        const response = await fetch('/pages/submit-review', {
+        const response = await fetch('/pages/api/submit-review', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -332,7 +336,7 @@ const Page = () => {
         isOpen={showSharePopup && !hasSubmitted}
         onRequestClose={() => setShowSharePopup(false)}
         contentLabel="Share Review"
-        className="Modal bg-orange-300 p-6 rounded-lg shadow-lg max-w-md mx-auto mt-20"
+        className="Modal bg-white  p-6 rounded-lg shadow-lg max-w-md mx-auto mt-20"
         overlayClassName="Overlay fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center"
       >
         <h2 className="text-2xl font-bold mb-4">Share Your Review</h2>

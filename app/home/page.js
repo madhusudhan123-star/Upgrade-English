@@ -23,7 +23,7 @@ const page = () => {
         e.preventDefault();
         setSubmitStatus('Submitting...');
         try {
-            const response = await fetch('/pages/submit-review', {
+            const response = await fetch('/pages/api/submit-review', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
