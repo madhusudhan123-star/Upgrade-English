@@ -281,6 +281,7 @@ const Page = () => {
     return null;
   }
   const SharePopup = () => {
+    const [localName, setLocalName] = useState('');
     const [localEmail, setLocalEmail] = useState('');
     const [localMessage, setLocalMessage] = useState('');
     const [localSubmitStatus, setLocalSubmitStatus] = useState('');
@@ -293,6 +294,9 @@ const Page = () => {
       }
     }, [showSharePopup, hasSubmitted, email, message, submitStatus]);
 
+    const handleLocalNameChange = (e) => {
+      setLocalName(e.target.value);
+    };
     const handleLocalEmailChange = (e) => {
       setLocalEmail(e.target.value);
     };
@@ -305,12 +309,12 @@ const Page = () => {
       e.preventDefault();
       setLocalSubmitStatus('Submitting...');
       try {
-        const response = await fetch('/pages/api/submitreview', {
+        const response = await fetch('/pages/api/contact', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify({ email: localEmail, message: localMessage }),
+          body: JSON.stringify({ name: localName, email: localEmail, message: localMessage }),
         });
 
         const data = await response.json();
@@ -342,6 +346,14 @@ const Page = () => {
         <h2 className="text-2xl font-bold mb-4">Share Your Review</h2>
         <p>Enter the email for saving your previous history</p>
         <form onSubmit={handleLocalSubmit}>
+          <input
+            type="name"
+            value={localName}
+            onChange={handleLocalNameChange}
+            placeholder="Enter email address"
+            className="w-full p-2 border border-gray-300 rounded mb-4"
+            required
+          />
           <input
             type="email"
             value={localEmail}

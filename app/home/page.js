@@ -12,6 +12,7 @@ const page = () => {
     const [isSticky, setIsSticky] = useState(false);
     const [submitStatus, setSubmitStatus] = useState('');
     const [formData, setFormData] = useState({
+        name: '',
         email: '',
         message: ''
     });
@@ -23,7 +24,7 @@ const page = () => {
         e.preventDefault();
         setSubmitStatus('Submitting...');
         try {
-            const response = await fetch('/pages/api/submitreview', {
+            const response = await fetch('/pages/api/contact', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -322,8 +323,9 @@ const page = () => {
                         <p className='mt-1 mb-10'>Your reviews aren't just testimonials; they're the building blocks of our evolution. Here's your feedback makes a difference</p>
                         <h1 className='text-[#FFE32B] font-semibold mb-3'>Review</h1>
                         <form onSubmit={handleSubmit} >
+                            <input type='name' name="name" placeholder='Enter your name' value={formData.email} onChange={handleChange} className='bg-[#1A1A1A] border-[#FFE32B] border-2 rounded-md w-full p-2 mt-2' />
                             <input type='email' name="email" placeholder='Enter your email' value={formData.email} onChange={handleChange} className='bg-[#1A1A1A] border-[#FFE32B] border-2 rounded-md w-full p-2 mt-2' />
-                            <textarea type='text' name="message" placeholder='Enter your review' value={formData.message} onChange={handleChange} className='bg-[#1A1A1A] border-[#FFE32B] border-2 rounded-md w-full p-2 mt-10' />
+                            <textarea type='text' name="message" placeholder='Enter your review' value={formData.message} onChange={handleChange} className='bg-[#1A1A1A] border-[#FFE32B] border-2 rounded-md w-full p-2 mt-7' />
                             <button type="submit" className='bg-[#FFE32B] text-black w-full p-2 rounded-md mt-10'>Submit</button>
                             {submitStatus && <p className="mt-2 text-white">{submitStatus}</p>}
                         </form>
