@@ -49,9 +49,6 @@ const Page = () => {
     }
 
     // Set up interval for showing share popup every 5 minutes
-    const intervalId = setInterval(() => {
-      setShowSharePopup(true);
-    }, 5 * 60 * 1000); // 5 minutes in milliseconds
     if (typeof window !== 'undefined' && ('SpeechRecognition' in window || 'webkitSpeechRecognition' in window)) {
       const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
       recognitionRef.current = new SpeechRecognition();
@@ -72,12 +69,23 @@ const Page = () => {
     setIsRotating(false);
 
     return () => {
-      clearInterval(intervalId);
       if (recognitionRef.current) {
         recognitionRef.current.stop();
       }
     };
   }, [isRotating1]);
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      setShowSharePopup(true);
+    }, 5 * 60 * 1000); // 5 minutes in milliseconds
+
+
+    return () => {
+      clearInterval(intervalId);
+    }
+  }, [])
+
 
   const handleTranscriptChange = (event) => {
     setIsEdited(true);
@@ -324,7 +332,7 @@ const Page = () => {
         isOpen={showSharePopup && !hasSubmitted}
         onRequestClose={() => setShowSharePopup(false)}
         contentLabel="Share Review"
-        className="Modal bg-white p-6 rounded-lg shadow-lg max-w-md mx-auto mt-20"
+        className="Modal bg-orange-300 p-6 rounded-lg shadow-lg max-w-md mx-auto mt-20"
         overlayClassName="Overlay fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center"
       >
         <h2 className="text-2xl font-bold mb-4">Share Your Review</h2>
@@ -365,7 +373,7 @@ const Page = () => {
     );
   };
   return (
-    <div className='overflow-x-hidden bg-orange-300'>
+    <div className='overflow-x-hidden bg-orange-300 h-full'>
       <button
         onClick={() => setRunTour(true)}
         className="absolute top-20 right-4 glass-background font-bold py-2 px-4 rounded"
@@ -380,7 +388,7 @@ const Page = () => {
           <Modal
             isOpen={true}
             contentLabel="Transcript Modal"
-            className="Modal bg-orange-300 focus:outline-none w-full pt-24 overflow-x-hidden h-full"
+            className="Modal bg-orange-300 focus:outline-none w-full pt-24 overflow-x-hidden "
             overlayClassName="Overlay"
           >
             <div className="modal-content max-w-4xl mx-auto">
@@ -436,8 +444,8 @@ const Page = () => {
                 Clear Review
               </button>
             </div>
-            <div className="review-history mt-8 max-w-4xl mx-auto">
-              <h2 className="text-2xl font-bold mb-4">Review History</h2>
+            <div className="review-history mt-8 max-w-4xl mx-auto h-full">
+              <h2 className="text-2xl font-bold mb-4 h-32">Review History</h2>
               {trackhistory.map((review, index) => (
                 <div key={index} className="mb-4">
                   <h3 className="font-bold">Review {index + 1}</h3>
@@ -446,11 +454,11 @@ const Page = () => {
               ))}
             </div>
           </Modal>
-          <SharePopup />
-          <Tour run={runTour} setRun={setRunTour} />
-        </div >
+          <SharePopup className='bg-orange-300' />
+          <Tour run={runTour} setRun={setRunTour} className='bg-orange-300' />
+        </div>
       )}
-    </div >
+    </div>
   );
 };
 
