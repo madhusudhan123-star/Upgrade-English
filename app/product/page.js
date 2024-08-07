@@ -305,7 +305,7 @@ const Page = () => {
       e.preventDefault();
       setLocalSubmitStatus('Submitting...');
       try {
-        const response = await fetch('/pages/api/submit-review', {
+        const response = await fetch('/pages/api/submitreview', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
