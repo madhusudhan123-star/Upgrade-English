@@ -22,27 +22,32 @@ const page = () => {
     };
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setSubmitStatus('Submitting...');
-        try {
-            const response = await fetch('/pages/api/contact', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(formData),
-            });
+        console.log(formData)
+        if (formData > 0) {
+            setSubmitStatus('Submitting...');
+            try {
+                const response = await fetch('/pages/api/contact', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(formData),
+                });
 
-            const data = await response.json();
+                const data = await response.json();
 
-            if (response.ok) {
-                setSubmitStatus('Review submitted successfully!');
-                setFormData({ email: '', message: '' });
-            } else {
-                setSubmitStatus(`Failed to submit review: ${data.error}`);
+                if (response.ok) {
+                    setSubmitStatus('Review submitted successfully!');
+                    setFormData({ email: '', message: '' });
+                } else {
+                    setSubmitStatus(`Failed to submit review: ${data.error}`);
+                }
+            } catch (error) {
+                console.error('Error submitting review:', error);
+                setSubmitStatus(`An error occurred: ${error.message}`);
             }
-        } catch (error) {
-            console.error('Error submitting review:', error);
-            setSubmitStatus(`An error occurred: ${error.message}`);
+        } else {
+            setSubmitStatus("Fill the Data");
         }
     }
 
@@ -323,7 +328,7 @@ const page = () => {
                         <p className='mt-1 mb-10'>Your reviews aren't just testimonials; they're the building blocks of our evolution. Here's your feedback makes a difference</p>
                         <h1 className='text-[#FFE32B] font-semibold mb-3'>Review</h1>
                         <form onSubmit={handleSubmit} >
-                            <input type='name' name="name" placeholder='Enter your name' value={formData.email} onChange={handleChange} className='bg-[#1A1A1A] border-[#FFE32B] border-2 rounded-md w-full p-2 mt-2' />
+                            <input type='name' name="name" placeholder='Enter your name' value={formData.name} onChange={handleChange} className='bg-[#1A1A1A] border-[#FFE32B] border-2 rounded-md w-full p-2 mt-2' />
                             <input type='email' name="email" placeholder='Enter your email' value={formData.email} onChange={handleChange} className='bg-[#1A1A1A] border-[#FFE32B] border-2 rounded-md w-full p-2 mt-2' />
                             <textarea type='text' name="message" placeholder='Enter your review' value={formData.message} onChange={handleChange} className='bg-[#1A1A1A] border-[#FFE32B] border-2 rounded-md w-full p-2 mt-7' />
                             <button type="submit" className='bg-[#FFE32B] text-black w-full p-2 rounded-md mt-10'>Submit</button>

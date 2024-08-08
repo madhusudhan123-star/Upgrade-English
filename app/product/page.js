@@ -25,6 +25,7 @@ const Page = () => {
   const [submitStatus, setSubmitStatus] = useState('');
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [microphonePermission, setMicrophonePermission] = useState('prompt');
+  const [isMobileView, setIsMobileView] = useState(false);
 
 
   useEffect(() => {
@@ -49,6 +50,7 @@ const Page = () => {
       setShowSharePopup(true);
       localStorage.setItem('hasSubmitted', 'true');
     }
+
 
     // Set up interval for showing share popup every 5 minutes
     if (typeof window !== 'undefined' && ('SpeechRecognition' in window || 'webkitSpeechRecognition' in window)) {
@@ -89,7 +91,18 @@ const Page = () => {
       clearInterval(intervalId);
     }
   }, [])
+  useEffect(() => {
+    // Check if the screen is mobile
+    const handleResize = () => {
+      setIsMobileView(window.innerWidth < 768);
+    };
+    window.addEventListener('resize', handleResize);
+    handleResize();
 
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
 
   const handleTranscriptChange = (event) => {
     setIsEdited(true);
@@ -350,7 +363,7 @@ const Page = () => {
             type="name"
             value={localName}
             onChange={handleLocalNameChange}
-            placeholder="Enter email address"
+            placeholder="Enter Name"
             className="w-full p-2 border border-gray-300 rounded mb-4"
             required
           />
@@ -407,10 +420,10 @@ const Page = () => {
             className="Modal bg-orange-300 focus:outline-none w-full pt-24 overflow-x-hidden "
             overlayClassName="Overlay"
           >
-            <div className="modal-content max-w-4xl mx-auto">
+            <div className={`modal-content max-w-4xl mx-auto ${isMobileView === true ? "hidden" : "block"}`}>
               <div className="flex items-center justify-center bg-orange-300 mb-8">
                 <div className={`cd-player flex relative`}>
-                  <div onClick={toggleRotation1} className={`w-full h-full absolute glass-background rounded-lg shadow-md ${isRotating1 ? "rotate-y-180" : ""}`}>
+                  <div onClick={toggleRotation1} className={`w-full h-full absolute glass-background rounded-lg shadow-md ${isRotating1 ? "rotate-y-180" : ""} `}>
                   </div>
                   <div className='border-2 border-white rounded-xl bg-[rgb(255 255 255 / 7%)]'>
                     <div
@@ -438,12 +451,12 @@ const Page = () => {
                 <textarea
                   value={editableTranscript}
                   onChange={handleTranscriptChange}
-                  className={`transcript-output w-full spoken_text glass-background  h-48 p-4 rounded-lg shadow-md mb-4 ${microphonePermission === 'denied' ? "hidden" : "block"}`}
+                  className={`transcript-output w-full spoken_text glass-background  h-48 p-4 rounded-lg shadow-md mb-4 ${microphonePermission === 'denied' ? "hidden" : "block"} ${isMobileView === true ? "hidden" : "block"}`}
                   placeholder="Your speech transcript will appear here..."
                 />
                 <button
                   onClick={analyzeText}
-                  className={`analyze-button glass-background font-bold py-5 px-5 rounded ${microphonePermission === 'denied' ? "hidden" : "block"}`}
+                  className={`analyze-button glass-background font-bold py-5 px-5 rounded ${microphonePermission === 'denied' ? "hidden" : "block"} ${isMobileView === true ? "hidden" : "block"}`}
                 >
                   Analyze Speech
                 </button>
@@ -472,6 +485,18 @@ const Page = () => {
           </Modal>
           <SharePopup className='bg-orange-300' />
           <Tour run={runTour} setRun={setRunTour} className='bg-orange-300' />
+        </div>
+      )}
+
+      {isMobileView && (
+        <div className="fixed w-[100vw] h-[100vh] bg-black/75 top-0 left-0 flex justify-center items-center backdrop-blur-sm">
+          <div className="bg-white rounded-lg p-8 max-w-md text-center shadow-lg">
+            <AlertCircle className="text-red-500 w-16 h-16 mx-auto mb-4" />
+            <p className="text-2xl font-bold mb-4 text-red-500">Warning</p>
+            <p className="text-gray-700">
+              This application is designed for desktop use. Some features may not work as expected on mobile devices.
+            </p>
+          </div>
         </div>
       )}
     </div>
