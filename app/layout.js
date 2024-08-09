@@ -1,5 +1,6 @@
 import { Inter } from "next/font/google";
 import "./globals.css";
+import Script from "next/script";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -11,6 +12,23 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
+      <Script strategy="afterInteractive" src="https://www.googletagmanager.com/gtag/js?id=G-9MLRPDECHD"></Script>
+      <Script
+        id="upgrade English"
+        strategy="afterInteractive"
+        dangerouslySetInnerHTML={{
+          __html: `
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+
+          gtag('config', 'G-9MLRPDECHD');
+        `,
+        }}
+      >
+
+      </Script>
+      <meta name="google-site-verification" content="OBrLKpKEJEhiKAk42_o4y81KFWxsh5jihhVT3KZU7-w" />
       <body className={inter.className}>{children}</body>
     </html>
   );
