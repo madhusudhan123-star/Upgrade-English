@@ -1,0 +1,9 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://upgrade-english.vercel.app/
+
+# Sitemaps
+Sitemap: https://upgrade-english.vercel.app/sitemap.xml

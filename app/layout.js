@@ -53,6 +53,7 @@
 import { Inter } from "next/font/google";
 import "./globals.css";
 import Script from "next/script";
+import Head from "next/head";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -64,9 +65,11 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <head>
+      <Head>
+        <title>Master English Grammar | Upgrade English</title>
+        <meta name="description" content="Learn advanced English grammar rules and techniques to improve your writing and speaking skills with Upgrade English." />
         <meta name="google-site-verification" content="OBrLKpKEJEhiKAk42_o4y81KFWxsh5jihhVT3KZU7-w" />
-      </head>
+      </Head>
       <body className={inter.className}>
         {children}
         <Script
