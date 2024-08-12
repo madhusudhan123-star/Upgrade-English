@@ -138,11 +138,11 @@ export default function RootLayout({ children }) {
             style={{ display: 'none', visibility: 'hidden' }}
           ></iframe>
         </noscript>
-        <Script id="adsense-init" strategy="afterInteractive">
+        {/* <Script id="adsense-init" strategy="afterInteractive">
           {`
             (adsbygoogle = window.adsbygoogle || []).push({});
           `}
-        </Script>
+        </Script> */}
       </body>
     </html>
   );

@@ -6,6 +6,7 @@ import { Disclosure, DisclosureButton, DisclosurePanel } from '@headlessui/react
 import { ChevronDownIcon } from '@heroicons/react/20/solid'
 import Navbar from '@/components/navbar';
 import Footer from '@/components/footer';
+import CustomCursor from './CustomCursor';
 
 const page = () => {
     const [openIndex, setOpenIndex] = useState(0);
@@ -23,7 +24,7 @@ const page = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         console.log(formData)
-        if (formData > 0) {
+        if (formData) {
             setSubmitStatus('Submitting...');
             try {
                 const response = await fetch('/pages/api/contact', {
@@ -38,7 +39,7 @@ const page = () => {
 
                 if (response.ok) {
                     setSubmitStatus('Review submitted successfully!');
-                    setFormData({ email: '', message: '' });
+                    setFormData({ name: '', email: '', message: '' });
                 } else {
                     setSubmitStatus(`Failed to submit review: ${data.error}`);
                 }
@@ -55,9 +56,7 @@ const page = () => {
         const header = document.getElementById("myHeader");
         if (!header) return;
         const scrollPosition = window.pageYOffset;
-        console.log(scrollPosition);
-
-        setIsSticky(scrollPosition > 667 && scrollPosition < 4000);
+        setIsSticky(scrollPosition > 667);
     }, []);
     useEffect(() => {
         handleScroll(); // Check initial position
@@ -105,15 +104,16 @@ const page = () => {
     ];
 
     return (
-        <div className=' overflow-x-hidden'>
+        <div className=' overflow-x-hidden cursor-none'>
             <div className=' bg-[#6C9AFF] w-screen overflow-y-hidden h-screen pl-10 pr-16' >
                 <Navbar />
-                <div className='cursor-default'>
-                    <h1 className='text-[97px] mt-10 font-bold xsm:text-[50px] sm:text-[50px] md:text-[50px] lg:text-[97px] xl:text-[97px] 2xl:text-[97px]'>Welcome to  UPG口ADE</h1>
+                <div className=''>
+                    <CustomCursor />
+                    <h1 className='text-[97px] mt-10 font-bold cursor-none xsm:text-[80px] sm:text-[100px] md:text-[100px] lg:text-[97px] xl:text-[97px] 2xl:text-[97px]'>Welcome to  UPG口ADE</h1>
                     <div className='flex justify-center items-top mt-36 h-screen xsm:hidden sm:hidden md:hidden lg:flex xl:flex 2xl:flex'>
                         <div className='flex flex-col gap-10'>
                             <p className='text-2xl font-medium'>Begin Your Journey: Click the Button to <br /> Start Practicing.</p>
-                            <p className=' text-xl font-bold absolute cursor-pointer bottom-0'><a href="#second_menu">Scroll Down</a></p>
+                            <p className=' text-xl font-bold absolute  bottom-0'><a href="#second_menu">Scroll Down</a></p>
                         </div>
                         <div>
                             <Image layout='responsive' className='relative right-[-50px]' alt="image" width={100} height={100} src="/util/img/home_front-page.jpg" />
@@ -121,10 +121,10 @@ const page = () => {
                     </div>
                 </div>
             </div>
-            <div className='flex relative cursor-default md:flex-wrap md:flex-col-reverse xsm:flex-wrap xsm:flex-col-reverse sm:flex-wrap sm:flex-col-reverse lg:flex-nowrap lg:flex-row xl:flex-nowrap xl:flex-row 2xl:flex-nowrap 2xl:flex-row '>
+            <div className='flex relative height-change  md:flex-wrap md:flex-col-reverse xsm:flex-wrap xsm:flex-col-reverse sm:flex-wrap sm:flex-col-reverse lg:flex-nowrap lg:flex-row xl:flex-nowrap xl:flex-row 2xl:flex-nowrap 2xl:flex-row '>
                 <div className='bg-[#F7F7F7] w-screen pl-10 pr-16'>
                     <div>
-                        <div id="second_menu" className={`flex gap-20 pl-8 ml-[-3rem] bg-[#F7F7F7] w-full font-semibold text-xl pt-5 pb-3 ${isSticky ? 'fixed top-0' : ''} `}>
+                        <div id="second_menu" className={`flex gap-20 xsm:gap-2 xsm:text-base sm:gap-5 sm:text-base  md:gap-10 md:text-base lg:gap-20 lg:text-xl xl:gap-20 xl:text-xl 2xl:gap-20 2xl:text-xl  pl-8 ml-[-3rem] bg-[#F7F7F7] w-full font-semibold text-xl pt-5 pb-3 ${isSticky ? 'fixed top-0' : ''} `}>
                             <p><a href="#Programme">Programme structure </a></p>
                             <p><a href='#Speakers'>Speakers</a></p>
                             <p><a href='#Cost'>Cost & Accommodation</a></p>
@@ -320,18 +320,18 @@ const page = () => {
                         </div>
                     </div>
                 </div>
-                <div id="myHeader" className='bg-[#1A1A1A] xsm:w-[100vw] sm:w-[100vw] md:w-[100vw] lg:w-[30vw] xl:w-[30vw] 2xl:w-[30vw] '>
-                    <div className={`bg-[#1A1A1A]  text-[1.5em] text-[#FFFFFF] p-5 ${isSticky ? 'xsm:relative sm:relative md:relative lg:fixed xl:fixed 2xl:fixed lg:top-0 xl:top-0 2xl:top-0 ' : ''}`}>
-                        <h1 className='text-[#FFE32B] font-semibold  mb-3'>Share Your Experience</h1>
-                        <p className=' mt-1 mb-10'>we believe in the power of community-driven growth. </p>
-                        <h1 className='text-[#FFE32B] font-semibold mt-10 mb-3'>Review</h1>
-                        <p className='mt-1 mb-10'>Your reviews aren't just testimonials; they're the building blocks of our evolution. Here's your feedback makes a difference</p>
-                        <h1 className='text-[#FFE32B] font-semibold mb-3'>Review</h1>
+                <div id="myHeader" className='bg-[#1A1A1A] change-small-height xsm:w-[100vw] sm:w-[100vw] md:w-[100vw] lg:w-[30vw] xl:w-[30vw] 2xl:w-[30vw] '>
+                    <div className={`bg-[#1A1A1A]  text-[1.2em] text-[#FFFFFF] p-5 ${isSticky ? ' change-small-height2 xsm:relative sm:relative md:relative lg:fixed xl:fixed 2xl:fixed lg:top-0 xl:top-0 2xl:top-0 ' : ''}`}>
+                        <h1 className='text-[#FFE32B] font-semibold '>Share Your Experience</h1>
+                        <p className=''>we believe in the power of community-driven growth. </p>
+                        <h1 className='text-[#FFE32B] font-semibold'>Review</h1>
+                        <p className=''>Your reviews aren't just testimonials; they're the building blocks of our evolution. Here's your feedback makes a difference</p>
+                        <h1 className='text-[#FFE32B] font-semibold'>Review</h1>
                         <form onSubmit={handleSubmit} >
-                            <input type='name' name="name" placeholder='Enter your name' value={formData.name} onChange={handleChange} className='bg-[#1A1A1A] border-[#FFE32B] border-2 rounded-md w-full p-2 mt-2' />
-                            <input type='email' name="email" placeholder='Enter your email' value={formData.email} onChange={handleChange} className='bg-[#1A1A1A] border-[#FFE32B] border-2 rounded-md w-full p-2 mt-2' />
-                            <textarea type='text' name="message" placeholder='Enter your review' value={formData.message} onChange={handleChange} className='bg-[#1A1A1A] border-[#FFE32B] border-2 rounded-md w-full p-2 mt-7' />
-                            <button type="submit" className='bg-[#FFE32B] text-black w-full p-2 rounded-md mt-10'>Submit</button>
+                            <input type='name' name="name" placeholder='Enter your name' value={formData.name} onChange={handleChange} className='bg-[#1A1A1A] border-[#FFE32B] border-2 rounded-md w-full p-2 ' />
+                            <input type='email' name="email" placeholder='Enter your email' value={formData.email} onChange={handleChange} className='bg-[#1A1A1A] border-[#FFE32B] border-2 rounded-md w-full p-2 ' />
+                            <textarea type='text' name="message" placeholder='Enter your review' value={formData.message} onChange={handleChange} className='bg-[#1A1A1A] border-[#FFE32B] border-2 rounded-md w-full p-2' />
+                            <button type="submit" className='bg-[#FFE32B] text-black w-full p-2 rounded-md '>Submit</button>
                             {submitStatus && <p className="mt-2 text-white">{submitStatus}</p>}
                         </form>
                     </div>
@@ -343,12 +343,3 @@ const page = () => {
 }
 
 export default page
-
-
-
-// height: 100vh;
-// display: flex;
-// flex-direction: column;
-// justify-content: space-evenly;
-// font-size: 1.5em;
-// }

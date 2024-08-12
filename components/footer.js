@@ -35,14 +35,14 @@ const Footer = () => {
                             </div>
                         </div>
                         <div className='p-10'>
-                            <p>Terms and conditions      Privacy policy</p>
+                            <p>Developed By MADHUSUDHAN</p>
                         </div>
                     </div>
                     <div className='flex flex-col justify-between w-[35vw] xsm:w-full mt-10 sm:w-full mt-10 md:w-full mt-10 lg:w-[35vw] xl:w-[35vw] 2xl:w-[35vw]'>
                         <div>
                         </div>
                         <div className='p-10'>
-                            <p>Developed By MADHUSUDHAN</p>
+                            <p></p>
                         </div>
                     </div>
                 </div>
