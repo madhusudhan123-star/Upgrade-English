@@ -43,7 +43,7 @@ const YouTubePlayer = ({ videoId }) => {
             <YouTube videoId={videoId} opts={opts} onReady={onReady} className="h-[80vh]" />
             <button
                 onClick={toggleMute}
-                className="absolute bottom-4 right-4 bg-black bg-opacity-50 text-white p-2 rounded-full"
+                className="absolute bottom-4 left-2 bg-black bg-opacity-50 text-white p-2 rounded-full"
             >
                 {isMuted ? <VolumeX size={24} /> : <Volume2 size={24} />}
             </button>

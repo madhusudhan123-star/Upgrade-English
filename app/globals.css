@@ -198,6 +198,111 @@
   }
 }
 
+
+@media screen and (max-width: 1920px) and (max-height:1080px) {
+  .firstbox {
+    right: 100px;
+    top: 100px;
+    height: 300px;
+    width: 300px;
+    font-size: 1.5rem;
+  }
+
+  .secondbox {
+    top: 320px;
+    right: 580px;
+    height: 300px;
+    width: 300px;
+    font-size: 1.5rem;
+  }
+
+  .thirdbox {
+    width: 400px;
+    height: 400px;
+    top: 300px;
+    left: 350px;
+    font-size: 1.5rem;
+  }
+
+  .thirdminbox {
+    top: 400px;
+    height: 100px;
+  }
+
+  .fivethbox {
+    left: 870px;
+    top: 650px;
+    height: 350px;
+    width: 350px;
+    font-size: 1.5rem;
+  }
+
+  .sixthbox {
+    top: 900px;
+    right: 500px;
+    height: 350px;
+    width: 350px;
+    font-size: 1.5rem;
+  }
+
+  .fourbox {
+    top: 870px;
+    left: 85px;
+    height: 300px;
+    width: 300px;
+    font-size: 1.5rem;
+  }
+
+  .array_mark_map {
+    right: 7vw;
+    bottom: 10vh;
+  }
+
+  .map_div {
+    width: 100vw;
+  }
+
+  .first_text_map {
+    top: 8vh;
+    left: 32vw;
+  }
+
+  .second_text_map {
+    top: 15vh;
+    right: 27vw;
+  }
+
+  .third_text_map {
+    top: 30vh;
+    left: 18vw;
+  }
+
+  .forth_text_map {
+    top: 42vh;
+    left: 35vw;
+  }
+
+  .five_text_map {
+    top: 38vh;
+    right: 34vw;
+  }
+
+  .six_text_map {
+    top: 35vh;
+    right: 18vw;
+  }
+
+  .seven_text_map {
+    bottom: 10vh;
+    left: 36vw;
+  }
+
+  .eight_text_map {
+    bottom: 10vh;
+    right: 31vw;
+  }
+}
+
 @media screen and (max-width: 1728px) {
   .firstbox {
     right: 105px;

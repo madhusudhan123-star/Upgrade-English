@@ -124,7 +124,7 @@ const page = () => {
             <div className='flex relative cursor-default md:flex-wrap md:flex-col-reverse xsm:flex-wrap xsm:flex-col-reverse sm:flex-wrap sm:flex-col-reverse lg:flex-nowrap lg:flex-row xl:flex-nowrap xl:flex-row 2xl:flex-nowrap 2xl:flex-row '>
                 <div className='bg-[#F7F7F7] w-screen pl-10 pr-16'>
                     <div>
-                        <div id="second_menu" className={`flex gap-20 bg-[#F7F7F7] w-full font-semibold text-xl pt-5 pb-3 ${isSticky ? 'fixed top-0' : ''} `}>
+                        <div id="second_menu" className={`flex gap-20 pl-8 ml-[-3rem] bg-[#F7F7F7] w-full font-semibold text-xl pt-5 pb-3 ${isSticky ? 'fixed top-0' : ''} `}>
                             <p><a href="#Programme">Programme structure </a></p>
                             <p><a href='#Speakers'>Speakers</a></p>
                             <p><a href='#Cost'>Cost & Accommodation</a></p>
@@ -246,7 +246,7 @@ const page = () => {
                         </div>
                     </div>
                     <div id="Speakers" className='w-full '>
-                        <div className='h-full w-full'>
+                        <div className='h-full w-full mb-16'>
                             <h1 className='text-5xl font-bold mb-20'>Speakers</h1>
                             <div className=" w-full">
                                 <div className="w-full  divide-y rounded-xl">
@@ -321,7 +321,7 @@ const page = () => {
                     </div>
                 </div>
                 <div id="myHeader" className='bg-[#1A1A1A] xsm:w-[100vw] sm:w-[100vw] md:w-[100vw] lg:w-[30vw] xl:w-[30vw] 2xl:w-[30vw] '>
-                    <div className={`bg-[#1A1A1A] text-[#FFFFFF] p-5 ${isSticky ? 'xsm:relative sm:relative md:relative lg:fixed xl:fixed 2xl:fixed lg:top-0 xl:top-0 2xl:top-0 ' : ''}`}>
+                    <div className={`bg-[#1A1A1A]  text-[1.5em] text-[#FFFFFF] p-5 ${isSticky ? 'xsm:relative sm:relative md:relative lg:fixed xl:fixed 2xl:fixed lg:top-0 xl:top-0 2xl:top-0 ' : ''}`}>
                         <h1 className='text-[#FFE32B] font-semibold  mb-3'>Share Your Experience</h1>
                         <p className=' mt-1 mb-10'>we believe in the power of community-driven growth. </p>
                         <h1 className='text-[#FFE32B] font-semibold mt-10 mb-3'>Review</h1>
@@ -346,3 +346,9 @@ export default page
 
 
 
+// height: 100vh;
+// display: flex;
+// flex-direction: column;
+// justify-content: space-evenly;
+// font-size: 1.5em;
+// }

@@ -584,7 +584,7 @@ export default function Home() {
             </div>
             <div>
                 <div className=' pb-10'>
-                    <div className="flex  w-screen h-full" >
+                    <div className="flex justify-around  w-screen h-full" >
                         <div onClick={footerfunarr1} className={`relative ${footerotate1 ? 'rotate' : ''}`}>
                             <Image src="/util/img/footer_arr1.svg" layout="responsive" width={80} height={80} alt="arrow" className="arrow" />
                         </div>
