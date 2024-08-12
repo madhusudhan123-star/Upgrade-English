@@ -17,6 +17,7 @@ export default function RootLayout({ children }) {
         <title>Master English Grammar | Upgrade English</title>
         <meta name="description" content="Learn advanced English grammar rules and techniques to improve your writing and speaking skills with Upgrade English." />
         <meta name="google-site-verification" content="OBrLKpKEJEhiKAk42_o4y81KFWxsh5jihhVT3KZU7-w" />
+        <meta name="google-adsense-account" content="ca-pub-4476899930876130"></meta>
       </Head>
       <body className={inter.className}>
         {children}
@@ -50,7 +51,7 @@ export default function RootLayout({ children }) {
           }}
         />
         <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4476899930876130"
-     crossorigin="anonymous"></script>
+          crossorigin="anonymous"></script>
         <noscript>
           <iframe
             src="https://www.googletagmanager.com/ns.html?id=GTM-THZ743TQ"
