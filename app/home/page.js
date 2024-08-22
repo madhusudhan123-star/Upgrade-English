@@ -4,9 +4,9 @@ import React, { useState, useEffect, useCallback } from 'react'
 import YouTubePlayer from './YouTubePlayer';
 import { Disclosure, DisclosureButton, DisclosurePanel } from '@headlessui/react'
 import { ChevronDownIcon } from '@heroicons/react/20/solid'
-import Navbar from '@/components/navbar';
-import Footer from '@/components/footer';
 import CustomCursor from './CustomCursor';
+import { Menu } from 'lucide-react';
+import { IoMdClose } from "react-icons/io";
 
 const page = () => {
     const [openIndex, setOpenIndex] = useState(0);
@@ -18,13 +18,31 @@ const page = () => {
         message: ''
     });
 
+    const [togglemenu, setTogglemenu] = useState(false)
+    const handleToggle = () => {
+        const newToggleState = !togglemenu;
+        setTogglemenu(newToggleState);
+        onMobileMenuToggle(newToggleState);
+    };
+
+    useEffect(() => {
+        if (togglemenu) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = 'unset';
+        }
+
+        return () => {
+            document.body.style.overflow = 'unset';
+        };
+    }, [togglemenu]);
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
     const handleSubmit = async (e) => {
         e.preventDefault();
         console.log(formData)
-        if (formData) {
+        if (formData.email) {
             setSubmitStatus('Submitting...');
             try {
                 const response = await fetch('/pages/api/contact', {
@@ -106,7 +124,54 @@ const page = () => {
     return (
         <div className=' overflow-x-hidden cursor-none'>
             <div className=' bg-[#6C9AFF] w-screen overflow-y-hidden h-screen pl-10 pr-16' >
-                <Navbar />
+                <div>
+                    <div className='flex justify-between text-xl pt-5 xsm:hidden sm:hidden md:hidden lg:flex xl:flex 2xl:flex  '>
+                        <div className=' font-extrabold'>
+                            <h1><a className='cursor-none' href='/'>UPG口ADE<br />ENGलिSH</a></h1>
+                        </div>
+                        <div className='flex gap-20 '>
+                            <p><a className='cursor-none' href="/product">Start Exercise</a></p>
+                            <p><a className='cursor-none' href="/about">Meet the Developer</a></p>
+                            <p><a className='cursor-none' href="/contact">Contact</a></p>
+
+                        </div>
+                    </div>
+                    <div className='xsm:block sm:block md:block lg:hidden xl:hidden 2xl:hidden'>
+                        <div className='flex justify-between text-xl pt-5'>
+                            <div className='font-extrabold'>
+                                <h1><a className='cursor-none' href='/'>UPG口ADE<br />ENGलिSH</a></h1>
+
+                            </div>
+                            <button
+                                onClick={handleToggle}
+                                className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500"
+                            >
+                                <Menu className="h-6 text-black w-6" />
+                            </button>
+                            {togglemenu && (
+                                <div className="fixed w-screen h-screen left-0 top-0 overflow-hidden bg-[#1A1A1A] rounded-lg p-4">
+                                    <div className='w-screen flex justify-between items-start'>
+                                        <div className='text-[#FFE32B] leading-relaxed text-[20px] font-extrabold'>
+                                            <h1>UPG口ADE<br />
+                                                ENGलिSH</h1>
+                                        </div>
+                                        <button
+                                            onClick={handleToggle}
+                                            className="inline-flex items-center mr-24 text-white justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500"
+                                        >
+                                            <IoMdClose className="h-6 w-6" />
+                                        </button>
+                                    </div>
+                                    <div className='text-[#FFE32B] w-screen h-full leading-relaxed mt-10 text-[50px]'>
+                                        <p><a className='cursor-none' href="/product">START EXERCISE </a></p>
+                                        <p><a className='cursor-none' href="/about"> MEET THE DEVELOPER </a></p>
+                                        <p><a className='cursor-none' href="/contact">CONTACT</a></p>
+                                    </div>
+                                </div>
+                            )}
+                        </div>
+                    </div>
+                </div>
                 <div className=''>
                     <CustomCursor />
                     <h1 className='text-[97px] mt-10 font-bold cursor-none xsm:text-[80px] sm:text-[100px] md:text-[100px] lg:text-[97px] xl:text-[97px] 2xl:text-[97px]'>Welcome to  UPG口ADE</h1>
@@ -125,9 +190,9 @@ const page = () => {
                 <div className='bg-[#F7F7F7] w-screen pl-10 pr-16'>
                     <div>
                         <div id="second_menu" className={`flex gap-20 xsm:gap-2 xsm:text-base sm:gap-5 sm:text-base  md:gap-10 md:text-base lg:gap-20 lg:text-xl xl:gap-20 xl:text-xl 2xl:gap-20 2xl:text-xl  pl-8 ml-[-3rem] bg-[#F7F7F7] w-full font-semibold text-xl pt-5 pb-3 ${isSticky ? 'fixed top-0' : ''} `}>
-                            <p><a href="#Programme">Programme structure </a></p>
-                            <p><a href='#Speakers'>Speakers</a></p>
-                            <p><a href='#Cost'>Cost & Accommodation</a></p>
+                            <p><a className='cursor-none' href="#Programme">Programme structure </a></p>
+                            <p><a className='cursor-none' href='#Speakers'>Speakers</a></p>
+                            <p><a className='cursor-none' href='#Cost'>Cost & Accommodation</a></p>
                         </div>
                         <div className=' h-[1px] bg-[#E5E5E5] ml-[-40px] mr-[-64px]'></div>
                     </div>
@@ -187,7 +252,7 @@ const page = () => {
                         </div>
                     </div>
                     <div className='w-[110%] h-[80vh] ml-[-40px] pr-[-64px] xsm:ml-[0px] pr-[0px] sm:ml-[0px] pr-[0px] md:ml-[0px] pr-[0px] lg:ml-[-40px] pr-[-64px] xl:ml-[-40px] pr-[-64px] 2xl:ml-[-40px] pr-[-64px]  mt-20 mb-20'>
-                        <YouTubePlayer className='w-full' videoId="2YwfHN4PhUs" />
+                        <YouTubePlayer className='w-full cursor-none' videoId="2YwfHN4PhUs" />
                         {/* https://youtu.be/ */}
                     </div>
                     <div id="Programme" className='w-full '>
@@ -255,7 +320,7 @@ const page = () => {
                                             {({ open }) => (
                                                 <>
                                                     <Disclosure.Button
-                                                        className="group flex w-full items-center justify-between"
+                                                        className="group flex w-full items-center cursor-none justify-between"
                                                         onClick={() => toggleDisclosure(index)}
                                                     >
                                                         <span className="text-3xl font-medium">
@@ -266,7 +331,7 @@ const page = () => {
                                                     <Disclosure.Panel static className={`mt-2 text-lg ${openIndex === index ? '' : 'hidden'}`}>
                                                         <div className='flex w-full h-full xsm:flex-col sm:flex-col md:flex-col lg:flex-row xl:flex-row 2xl:flex-row'>
                                                             <div className='w-1/2 mt-10 xsm:w-full sm:w-full md:w-full lg:w-1/2 xl:w-1/2 2xl:w-1/2'>
-                                                                <a href={section.link} >
+                                                                <a href={section.link} className='cursor-none' >
                                                                     <img alt="image" className='h-[55vh] w-[20vw] xsm:h-[30vh] w-[40vw] sm:h-[30vh] w-[40vw] md:h-[30vh] w-[40vw] lg:h-[55vh] xl:h-[55vh] 2xl:h-[55vh]' src={section.image} />
                                                                 </a>
                                                             </div>
@@ -320,7 +385,7 @@ const page = () => {
                         </div>
                     </div>
                 </div>
-                <div id="myHeader" className='bg-[#1A1A1A] change-small-height xsm:w-[100vw] sm:w-[100vw] md:w-[100vw] lg:w-[30vw] xl:w-[30vw] 2xl:w-[30vw] '>
+                <div id="myHeader" className='bg-[#1A1A1A] change-small-height xsm:w-[100vw] sm:w-[100vw] md:w-[100vw] lg:w-[30vw] xl:w-[30vw] 2xl:w-[30vw] cursor-none'>
                     <div className={`bg-[#1A1A1A]  text-[1.2em] text-[#FFFFFF] p-5 ${isSticky ? ' change-small-height2 xsm:relative sm:relative md:relative lg:fixed xl:fixed 2xl:fixed lg:top-0 xl:top-0 2xl:top-0 ' : ''}`}>
                         <h1 className='text-[#FFE32B] font-semibold '>Share Your Experience</h1>
                         <p className=''>we believe in the power of community-driven growth. </p>
@@ -328,16 +393,61 @@ const page = () => {
                         <p className=''>Your reviews aren't just testimonials; they're the building blocks of our evolution. Here's your feedback makes a difference</p>
                         <h1 className='text-[#FFE32B] font-semibold'>Review</h1>
                         <form onSubmit={handleSubmit} >
-                            <input type='name' name="name" placeholder='Enter your name' value={formData.name} onChange={handleChange} className='bg-[#1A1A1A] border-[#FFE32B] border-2 rounded-md w-full p-2 ' />
-                            <input type='email' name="email" placeholder='Enter your email' value={formData.email} onChange={handleChange} className='bg-[#1A1A1A] border-[#FFE32B] border-2 rounded-md w-full p-2 ' />
-                            <textarea type='text' name="message" placeholder='Enter your review' value={formData.message} onChange={handleChange} className='bg-[#1A1A1A] border-[#FFE32B] border-2 rounded-md w-full p-2' />
-                            <button type="submit" className='bg-[#FFE32B] text-black w-full p-2 rounded-md '>Submit</button>
+                            <input type='name' name="name" placeholder='Enter your name' value={formData.name} onChange={handleChange} className='bg-[#1A1A1A] border-[#FFE32B] border-2 rounded-md w-full p-2 cursor-none ' />
+                            <input type='email' name="email" placeholder='Enter your email' value={formData.email} onChange={handleChange} className='bg-[#1A1A1A] border-[#FFE32B] border-2 rounded-md w-full p-2 cursor-none' />
+                            <textarea type='text' name="message" placeholder='Enter your review' value={formData.message} onChange={handleChange} className='bg-[#1A1A1A] border-[#FFE32B] border-2 rounded-md w-full p-2 cursor-none' />
+                            <button type="submit" className='bg-[#FFE32B] text-black w-full p-2 rounded-md cursor-none '>Submit</button>
                             {submitStatus && <p className="mt-2 text-white">{submitStatus}</p>}
                         </form>
                     </div>
                 </div>
             </div>
-            <Footer />
+            <div>
+                <div className='w-screen cursor-default  mt-10 bg-[#1A1A1A] cursor-none'>
+                    <div className='flex h-full gap-10 text-[#999589] xsm:flex-col sm:flex-col md:flex-col lg:flex-row xl:flex-row 2xl:flex-row'>
+                        <div className='flex flex-col justify-between w-[35vw] xsm:w-full mt-10 sm:w-full mt-10 md:w-full mt-10 lg:w-[35vw] xl:w-[35vw] 2xl:w-[35vw]'>
+                            <div className='p-10'>
+                                <h1 className='text-3xl text-[#FFE32B]'>
+                                    FOLLOW US
+                                    ON SOCIAL MEDIA
+                                </h1>
+                                <div>
+                                    <div class="social-icons flex justify-center gap-3 p">
+                                        <a href="https://x.com/EnglshUpgr97988" class="icon cursor-none twitter w-11 h-11 bg-[#ffeb3b] rounded-full flex items-center justify-center text-black font-extrabold">t</a>
+                                        <a href="https://www.instagram.com/upgradeenglish63/" class="icon cursor-none instagram w-11 h-11 bg-[#ffeb3b] rounded-full flex items-center justify-center text-black font-extrabold">i</a>
+                                        <a href="https://www.linkedin.com/in/upgrade-englsh-upgrade-english-1b991a321/" class="icon cursor-none linkedin w-11 h-11 bg-[#ffeb3b] rounded-full flex items-center justify-center text-black font-extrabold">in</a>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div className='p-10'>
+                                <p>© 2024 Future student.</p>
+                            </div>
+                        </div>
+                        <div className='flex flex-col justify-between w-[35vw] xsm:w-full mt-10 sm:w-full mt-10 md:w-full mt-10 lg:w-[35vw] xl:w-[35vw] 2xl:w-[35vw]'>
+                            <div className='p-10'>
+                                <h1 className='text-3xl text-[#FFE32B]'>
+                                    SUBSCRIBE TO
+                                    OUR NEWSLETTER
+                                </h1>
+                                <div>
+                                    <p>By leaving a review, you are subscribing to us.</p>
+                                </div>
+                            </div>
+                            <div className='p-10'>
+                                <p>Developed By MADHUSUDHAN</p>
+                            </div>
+                        </div>
+                        <div className='flex flex-col justify-between w-[35vw] xsm:w-full mt-10 sm:w-full mt-10 md:w-full mt-10 lg:w-[35vw] xl:w-[35vw] 2xl:w-[35vw]'>
+                            <div>
+                            </div>
+                            <div className='p-10'>
+                                <p></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     )
 }

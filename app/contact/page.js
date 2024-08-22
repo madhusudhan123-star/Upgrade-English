@@ -75,10 +75,10 @@ const page = () => {
                         <div className='w-1/2 xsm:w-full sm:w-full md:w-full lg:w-1/2 xl:w-1/2 2xl:w-1/2'>
                             <h1 className='text-3xl font-bold p-7'>I'd love to hear from you</h1>
                             <p className='text-xl font-medium p-7'>For any inquiries or project discussions, please email me:<br />
-                                <span className='underline decoration-2 decoration-[#FFE32B] hover:no-underline'>dmadhusudhan98@gmail.com</span></p>
+                                <span className='underline decoration-2 decoration-[#FFE32B] hover:no-underline'>upgradeenglish63@gmail.com</span></p>
                             <div className='w-full h-[1px] bg-[#E5E5E5]'></div>
                             <p className='text-xl font-medium p-7'>For technical support or bug reports:<br />
-                                <span className='underline decoration-2 decoration-[#FFE32B] hover:no-underline'>dmadhusudhan98@gmail.com</span></p>
+                                <span className='underline decoration-2 decoration-[#FFE32B] hover:no-underline'>upgradeenglish63@gmail.com</span></p>
                         </div>
                     </div>
                     <div className='1/2 xsm:w-full sm:w-full md:w-full lg:w-1/2 xl:w-1/2 2xl:w-1/2 bg-[#FFE32B]'>

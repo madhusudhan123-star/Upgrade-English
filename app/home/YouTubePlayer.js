@@ -39,14 +39,16 @@ const YouTubePlayer = ({ videoId }) => {
     };
 
     return (
-        <div className="youtube-player-container relative">
-            <YouTube videoId={videoId} opts={opts} onReady={onReady} className="h-[80vh]" />
-            <button
-                onClick={toggleMute}
-                className="absolute bottom-4 left-2 bg-black bg-opacity-50 text-white p-2 rounded-full"
-            >
-                {isMuted ? <VolumeX size={24} /> : <Volume2 size={24} />}
-            </button>
+        <div
+            className="youtube-player-container relative cursor-none pointer-events-none"
+            style={{ userSelect: 'none' }}
+        >
+            <YouTube
+                videoId={videoId}
+                opts={opts}
+                onReady={onReady}
+                className="h-[80vh] cursor-none"
+            />
         </div>
     );
 };

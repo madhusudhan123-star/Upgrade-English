@@ -483,9 +483,11 @@ export default function Home() {
                             SPEAK <br />CORRECT
                         </p>
                     </div>
-                    <div className='bg-[#FFE42B] thirdminbox top-[249px] absolute w-full  h-20 absolute bottom-0 hovereffect'>
-                        <p className='text-[#383838] hover:text-white font-medium text-2xl pl-8 pt-6'><a href='/home'>START</a></p>
-                    </div>
+                    <a href='/home'>
+                        <div className='bg-[#FFE42B] thirdminbox top-[249px] absolute w-full  h-20 absolute bottom-0 hovereffect'>
+                            <p className='text-[#383838] hover:text-white font-medium text-2xl pl-8 pt-6'>START</p>
+                        </div>
+                    </a>
                 </div>
 
                 <div onMouseOver={colorchanges3} className={`absolute cursor-default fourbox top-[628px] left-[65px] w-48 h-48 transition-colors duration-200 ease-in-out ${colorchange3 ? "bg-[#321BFF]" : "bg-[#5fc258] "}`} >
