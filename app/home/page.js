@@ -8,10 +8,54 @@ import CustomCursor from './CustomCursor';
 import { Menu } from 'lucide-react';
 import { IoMdClose } from "react-icons/io";
 
+
+const LoadingAnimation = () => {
+    const [count, setCount] = useState(1);
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+            setCount((prevCount) => {
+                if (prevCount < 100) {
+                    return prevCount + 1;
+                } else {
+                    clearInterval(interval);
+                    return prevCount;
+                }
+            });
+        }, 45); // Adjust the interval time to complete the count in 3 seconds (100 counts in 3 seconds)
+
+        return () => clearInterval(interval);
+    }, []);
+
+    return (
+        <div className="loading-container">
+            <div className="count">{count}%</div>
+            <style jsx>{`
+          .loading-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+          }
+  
+          .count {
+            font-size: 2rem;
+            color: black;
+            font-weight: bold;
+          }
+        `}</style>
+        </div>
+    );
+};
+
 const page = () => {
     const [openIndex, setOpenIndex] = useState(0);
     const [isSticky, setIsSticky] = useState(false);
     const [submitStatus, setSubmitStatus] = useState('');
+    const [isLoading, setIsLoading] = useState(true);
+
     const [formData, setFormData] = useState({
         name: '',
         email: '',
@@ -77,8 +121,16 @@ const page = () => {
         setIsSticky(scrollPosition > 667);
     }, []);
     useEffect(() => {
+
+        const simulateLoading = async () => {
+            // Simulate loading time
+            await new Promise((resolve) => setTimeout(resolve, 5000));
+            setIsLoading(false);
+        };
+
         handleScroll(); // Check initial position
         window.addEventListener('scroll', handleScroll);
+        simulateLoading();
 
         return () => {
             window.removeEventListener('scroll', handleScroll);
@@ -120,10 +172,13 @@ const page = () => {
             link: "https://www.voicetube.com/"
         },
     ];
+    if (isLoading) {
+        return <LoadingAnimation />;
+    }
 
     return (
         <div className=' overflow-x-hidden cursor-none'>
-            <div className=' bg-[#6C9AFF] w-screen overflow-y-hidden h-screen pl-10 pr-16' >
+            <div className=' bg-[#6C9AFF] w-screen overflow-y-hidden h-screen pl-10 pr-16 xsm:pl-3 xsm:h-[50vh] xsm:pr-3 sm:pl-3 sm:h-[50vh] sm:pr-3 md:pl-3 md:h-screen md:pr-3 lg:pl-10 lg:h-screen lg:pr-16 xl:pl-10 xl:h-screen xl:pr-16 2xl:pl-10 2xl:pr-16 2xl:h-screen'>
                 <div>
                     <div className='flex justify-between text-xl pt-5 xsm:hidden sm:hidden md:hidden lg:flex xl:flex 2xl:flex  '>
                         <div className=' font-extrabold'>
@@ -149,20 +204,21 @@ const page = () => {
                                 <Menu className="h-6 text-black w-6" />
                             </button>
                             {togglemenu && (
-                                <div className="fixed w-screen h-screen left-0 top-0 overflow-hidden bg-[#1A1A1A] rounded-lg p-4">
+                                <div className="fixed w-screen h-screen left-0 top-0 overflow-hidden bg-[#1A1A1A] rounded-lg p-4 z-10">
                                     <div className='w-screen flex justify-between items-start'>
                                         <div className='text-[#FFE32B] leading-relaxed text-[20px] font-extrabold'>
-                                            <h1>UPG口ADE<br />
+                                            <a className='cursor-none' href='/'> <h1>UPG口ADE<br />
                                                 ENGलिSH</h1>
+                                            </a>
                                         </div>
                                         <button
                                             onClick={handleToggle}
-                                            className="inline-flex items-center mr-24 text-white justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500"
+                                            className="inline-flex items-center mr-11 text-white justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500"
                                         >
                                             <IoMdClose className="h-6 w-6" />
                                         </button>
                                     </div>
-                                    <div className='text-[#FFE32B] w-screen h-full leading-relaxed mt-10 text-[50px]'>
+                                    <div className='text-[#FFE32B] w-screen h-full leading-relaxed mt-10 text-[11vw]'>
                                         <p><a className='cursor-none' href="/product">START EXERCISE </a></p>
                                         <p><a className='cursor-none' href="/about"> MEET THE DEVELOPER </a></p>
                                         <p><a className='cursor-none' href="/contact">CONTACT</a></p>
@@ -174,11 +230,11 @@ const page = () => {
                 </div>
                 <div className=''>
                     <CustomCursor />
-                    <h1 className='text-[97px] mt-10 font-bold cursor-none xsm:text-[80px] sm:text-[100px] md:text-[100px] lg:text-[97px] xl:text-[97px] 2xl:text-[97px]'>Welcome to  UPG口ADE</h1>
+                    <h1 className='text-[97px] mt-10 font-bold cursor-none xsm:text-[40px] sm:text-[70px] md:text-[70px] lg:text-[97px] xl:text-[97px] 2xl:text-[97px]'>Welcome to <br className='xsm:block sm:block md:block lg:hidden xl:hidden 2xl:hidden' /> UPG口ADE</h1>
                     <div className='flex justify-center items-top mt-36 h-screen xsm:hidden sm:hidden md:hidden lg:flex xl:flex 2xl:flex'>
                         <div className='flex flex-col gap-10'>
                             <p className='text-2xl font-medium'>Begin Your Journey: Click the Button to <br /> Start Practicing.</p>
-                            <p className=' text-xl font-bold absolute  bottom-0'><a href="#second_menu">Scroll Down</a></p>
+                            <p className=' text-xl font-bold absolute  bottom-0'><a className='cursor-none' href="#second_menu">Scroll Down</a></p>
                         </div>
                         <div>
                             <Image layout='responsive' className='relative right-[-50px]' alt="image" width={100} height={100} src="/util/img/home_front-page.jpg" />
@@ -187,9 +243,9 @@ const page = () => {
                 </div>
             </div>
             <div className='flex relative height-change  md:flex-wrap md:flex-col-reverse xsm:flex-wrap xsm:flex-col-reverse sm:flex-wrap sm:flex-col-reverse lg:flex-nowrap lg:flex-row xl:flex-nowrap xl:flex-row 2xl:flex-nowrap 2xl:flex-row '>
-                <div className='bg-[#F7F7F7] w-screen pl-10 pr-16'>
+                <div className='bg-[#F7F7F7] w-screen pl-10 pr-16 xsm:pl-1 xsm:pr-1 sm:pl-1 sm:pr-1 md:pl-1 md:pr-1 lg:pl-10 lg:pr-16 xl:pl-10 xl:pr-16 2xl:pl-10 2xl:pr-16'>
                     <div>
-                        <div id="second_menu" className={`flex gap-20 xsm:gap-2 xsm:text-base sm:gap-5 sm:text-base  md:gap-10 md:text-base lg:gap-20 lg:text-xl xl:gap-20 xl:text-xl 2xl:gap-20 2xl:text-xl  pl-8 ml-[-3rem] bg-[#F7F7F7] w-full font-semibold text-xl pt-5 pb-3 ${isSticky ? 'fixed top-0' : ''} `}>
+                        <div id="second_menu" className={`flex gap-20 xsm:gap-2 xsm:text-[14px] xsm:ml-[0rem] xsm:pl-0 sm:gap-5 sm:text-[20px] sm:ml-[0rem] sm:pl-0  md:gap-10 md:text-[15px] md:ml-[0rem] md:pl-0 lg:gap-20 lg:text-xl lg:ml-[-3rem] lg:pl-8 xl:gap-20 xl:text-xl xl:ml-[-3rem] xl:pl-8 2xl:gap-20 2xl:text-xl 2xl:ml-[-3rem] 2xl:pl-8  pl-8 ml-[-3rem] bg-[#F7F7F7] w-full font-semibold text-xl pt-5 pb-3 ${isSticky ? 'fixed top-0' : ''} `}>
                             <p><a className='cursor-none' href="#Programme">Programme structure </a></p>
                             <p><a className='cursor-none' href='#Speakers'>Speakers</a></p>
                             <p><a className='cursor-none' href='#Cost'>Cost & Accommodation</a></p>
@@ -224,7 +280,7 @@ const page = () => {
                                 </ul>
                             </div>
                             <div className='w-1/2 xsm:w-full sm:w-full md:w-full lg:w-1/2 xl:w-1/2 2xl:w-1/2'>
-                                <h1 className='mb-10 font-bold text-2xl'>
+                                <h1 className='mb-10 font-bold text-2xl mt-10'>
                                     How It Works
                                 </h1>
                                 <ul className='font-semibold '>
@@ -332,7 +388,7 @@ const page = () => {
                                                         <div className='flex w-full h-full xsm:flex-col sm:flex-col md:flex-col lg:flex-row xl:flex-row 2xl:flex-row'>
                                                             <div className='w-1/2 mt-10 xsm:w-full sm:w-full md:w-full lg:w-1/2 xl:w-1/2 2xl:w-1/2'>
                                                                 <a href={section.link} className='cursor-none' >
-                                                                    <img alt="image" className='h-[55vh] w-[20vw] xsm:h-[30vh] w-[40vw] sm:h-[30vh] w-[40vw] md:h-[30vh] w-[40vw] lg:h-[55vh] xl:h-[55vh] 2xl:h-[55vh]' src={section.image} />
+                                                                    <img alt="image" className='h-[55vh] w-[20vw] xsm:h-[30vh] w-[40vw] sm:h-full w-full md:h-full w-full lg:h-[55vh] xl:h-[55vh] 2xl:h-[55vh]' src={section.image} />
                                                                 </a>
                                                             </div>
                                                             <div className='w-1/2 xsm:w-full sm:w-full md:w-full lg:w-1/2 xl:w-1/2 2xl:w-1/2'>
@@ -352,10 +408,10 @@ const page = () => {
                     </div>
                     <div id="Cost" className='w-full '>
                         <div className='h-full w-full'>
-                            <h1 className='text-5xl font-bold mb-20'>PROGRAMME COST AND ACCOMMODATION</h1>
+                            <h1 className='text-5xl font-bold mb-20 xsm:text-xl xsm:mb-10 sm:text-xl sm:mb-10 md:text-2xl md:mb-10 lg:text-5xl lg:mb-10 xl:text-5xl xl:mb-10 2xl:text-5xl 2xl:mb-10'>PROGRAMME COST AND ACCOMMODATION</h1>
                             <div className='w-full flex xsm:flex-col items-center sm:flex-col items-center md:flex-col items-center lg:flex-row xl:flex-row 2xl:flex-row'>
                                 <div className='w-1/2 font-semibold xsm:w-full mt-10 sm:w-full mt-10 md:w-full mt-10 lg:w-1/2 xl:w-1/2 2xl:w-1/2 '>
-                                    <h1 className='mb-10 font-bold text-3xl'>
+                                    <h1 className='mb-10 font-bold text-3xl xsm:text-lg xsm:mb-5 sm:text-lg sm:mb-5 md:text-xl md:mb-5 lg:text-3xl lg:mb-10 xl:text-3xl xl:mb-10 2xl:text-3xl 2xl:mb-10'>
                                         Cost: Absolutely, Positively FREE!
                                     </h1>
                                     <ul>
@@ -386,13 +442,13 @@ const page = () => {
                     </div>
                 </div>
                 <div id="myHeader" className='bg-[#1A1A1A] change-small-height xsm:w-[100vw] sm:w-[100vw] md:w-[100vw] lg:w-[30vw] xl:w-[30vw] 2xl:w-[30vw] cursor-none'>
-                    <div className={`bg-[#1A1A1A]  text-[1.2em] text-[#FFFFFF] p-5 ${isSticky ? ' change-small-height2 xsm:relative sm:relative md:relative lg:fixed xl:fixed 2xl:fixed lg:top-0 xl:top-0 2xl:top-0 ' : ''}`}>
+                    <div className={`bg-[#1A1A1A] flex h-screen xsm:h-full xsm:text-lg sm:h-full sm:text-lg md:h-full md:text-lg lg:h-screen lg:text-[1.3vw] xl:h-screen xl:text-[1.3vw] 2xl:text-[1.3vw] 2xl:h-screen flex-col justify-evenly  text-[1.3vw] text-[#FFFFFF] p-5 ${isSticky ? ' change-small-height2 xsm:relative sm:relative md:relative lg:fixed xl:fixed 2xl:fixed lg:top-0 xl:top-0 2xl:top-0 ' : ''}`}>
                         <h1 className='text-[#FFE32B] font-semibold '>Share Your Experience</h1>
                         <p className=''>we believe in the power of community-driven growth. </p>
                         <h1 className='text-[#FFE32B] font-semibold'>Review</h1>
                         <p className=''>Your reviews aren't just testimonials; they're the building blocks of our evolution. Here's your feedback makes a difference</p>
                         <h1 className='text-[#FFE32B] font-semibold'>Review</h1>
-                        <form onSubmit={handleSubmit} >
+                        <form onSubmit={handleSubmit}>
                             <input type='name' name="name" placeholder='Enter your name' value={formData.name} onChange={handleChange} className='bg-[#1A1A1A] border-[#FFE32B] border-2 rounded-md w-full p-2 cursor-none ' />
                             <input type='email' name="email" placeholder='Enter your email' value={formData.email} onChange={handleChange} className='bg-[#1A1A1A] border-[#FFE32B] border-2 rounded-md w-full p-2 cursor-none' />
                             <textarea type='text' name="message" placeholder='Enter your review' value={formData.message} onChange={handleChange} className='bg-[#1A1A1A] border-[#FFE32B] border-2 rounded-md w-full p-2 cursor-none' />

@@ -52,7 +52,7 @@ const page = () => {
             <div>
                 <div className=' w-screen cursor-default overflow-y-hidden h-[80vh] pl-10 pr-16 bg-[#FFE32B]'>
                     <Navbar />
-                    <div className=' w-full h-[60vh] flex justify-between items-end'>
+                    <div className=' w-full h-[60vh] flex justify-between flex-wrap items-end'>
                         <div> <p className='text-[90vh] font-semibold text-[#1A1A1A] xsm:text-[5vh] sm:text-[5vh] md:text-[5vh] lg:text-[10vh] xl:text-[10vh] 2xl:text-[10vh]'>feel free <br /> to contact us</p> </div>
                         <div className='font-bold'>
                             <p className='mb-10'>

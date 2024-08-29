@@ -29,7 +29,7 @@ const CustomCursor = () => {
 
     return (
         <div
-            className="custom-cursor"
+            className="custom-cursor xsm:hidden sm:hidden md:hidden lg:block xl:block 2xl:block block"
             style={{
                 left: `${position.x}px`,
                 top: `${position.y}px`,

@@ -26,7 +26,7 @@ const Navbar = ({ onMobileMenuToggle }) => {
 
     return (
         <div>
-            <div className='flex justify-between text-xl pt-5 xsm:hidden sm:hidden md:hidden lg:flex xl:flex 2xl:flex  '>
+            <div className='flex justify-between text-xl pt-5 xsm:hidden sm:hidden md:hidden lg:flex xl:flex 2xl:flex'>
                 <div className=' font-extrabold'>
                     <h1><a href='/'>UPG口ADE<br />ENGलिSH</a></h1>
                 </div>
@@ -50,20 +50,21 @@ const Navbar = ({ onMobileMenuToggle }) => {
                         <Menu className="h-6 text-black w-6" />
                     </button>
                     {togglemenu && (
-                        <div className="fixed w-screen h-screen left-0 top-0 overflow-hidden bg-[#1A1A1A] rounded-lg p-4">
+                        <div className="fixed w-screen h-screen left-0 top-0 overflow-hidden bg-[#1A1A1A] rounded-lg p-4 z-10">
                             <div className='w-screen flex justify-between items-start'>
                                 <div className='text-[#FFE32B] leading-relaxed text-[20px] font-extrabold'>
-                                    <h1>UPG口ADE<br />
+                                    <a className='cursor-none' href='/'> <h1>UPG口ADE<br />
                                         ENGलिSH</h1>
+                                    </a>
                                 </div>
                                 <button
                                     onClick={handleToggle}
-                                    className="inline-flex items-center mr-24 text-white justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500"
+                                    className="inline-flex items-center mr-11 text-white justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500"
                                 >
                                     <IoMdClose className="h-6 w-6" />
                                 </button>
                             </div>
-                            <div className='text-[#FFE32B] w-screen h-full leading-relaxed mt-10 text-[50px]'>
+                            <div className='text-[#FFE32B] w-screen h-full leading-relaxed mt-10 text-[11vw]'>
                                 <p><a href="/product">START EXERCISE </a></p>
                                 <p><a href="/about"> MEET THE DEVELOPER </a></p>
                                 <p><a href="/contact">CONTACT</a></p>

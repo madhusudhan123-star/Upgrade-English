@@ -218,6 +218,115 @@ body {
 }
 
 
+@media screen and (max-width: 1944px) and (max-height:807px) {
+  .firstbox {
+    right: 100px;
+    top: 100px;
+    height: 300px;
+    width: 300px;
+    font-size: 1.5rem;
+  }
+
+  .secondbox {
+    top: 320px;
+    right: 580px;
+    height: 300px;
+    width: 300px;
+    font-size: 1.5rem;
+  }
+
+  .thirdbox {
+    width: 400px;
+    height: 400px;
+    top: 300px;
+    left: 350px;
+    font-size: 1.5rem;
+  }
+
+  .thirdminbox {
+    top: 400px;
+    height: 100px;
+  }
+
+  .fivethbox {
+    left: 870px;
+    top: 650px;
+    height: 350px;
+    width: 350px;
+    font-size: 1.5rem;
+  }
+
+  .sixthbox {
+    top: 900px;
+    right: 500px;
+    height: 350px;
+    width: 350px;
+    font-size: 1.5rem;
+  }
+
+  .fourbox {
+    top: 870px;
+    left: 85px;
+    height: 300px;
+    width: 300px;
+    font-size: 1.5rem;
+  }
+
+  .array_mark_map {
+    right: 7vw;
+    bottom: 10vh;
+  }
+
+  .map_div {
+    width: 100vw;
+  }
+
+  .common {
+    font-size: 2rem;
+  }
+
+  .first_text_map {
+    top: 9vh;
+    left: 31vw;
+  }
+
+  .second_text_map {
+    top: 20vh;
+    right: 25vw;
+  }
+
+  .third_text_map {
+    top: 45vh;
+    left: 18vw;
+  }
+
+  .forth_text_map {
+    top: 58vh;
+    left: 33vw;
+  }
+
+  .five_text_map {
+    top: 50vh;
+    right: 33vw;
+  }
+
+  .six_text_map {
+    top: 45vh;
+    right: 18vw;
+  }
+
+  .seven_text_map {
+    bottom: 12vh;
+    left: 36vw;
+  }
+
+  .eight_text_map {
+    bottom: 13vh;
+    right: 31vw;
+  }
+}
+
+
 @media screen and (max-width: 1920px) and (max-height:1080px) {
   .firstbox {
     right: 100px;
@@ -1249,6 +1358,113 @@ body {
 
   .eight_text_map {
     bottom: 7vh;
+    right: 28vw;
+  }
+}
+
+
+
+@media screen and (max-width: 901px) and (max-height: 500px) {
+  .firstbox {
+    right: 50px;
+    top: 55px;
+    width: 130px;
+    height: 130px;
+    font-size: 0.8rem;
+  }
+
+  .secondbox {
+    top: 150px;
+    right: 270px;
+    width: 130px;
+    height: 130px;
+    font-size: 0.8rem;
+  }
+
+  .small_size_design {
+    width: 200px;
+    height: 200px;
+  }
+
+  .small_size_design_shape {
+    width: 170px;
+    height: 150px;
+  }
+
+  .thirdbox {
+    width: 150px;
+    height: 150px;
+    top: 140px;
+    left: 180px;
+    font-size: 0.9rem;
+  }
+
+  .thirdminbox {
+    top: 150px;
+    font-size: 0.9rem;
+  }
+
+  .fivethbox {
+    left: 380px;
+    top: 280px;
+    font-size: 0.9rem;
+  }
+
+  .sixthbox {
+    top: 400px;
+    right: 200px;
+    font-size: 0.9rem;
+  }
+
+  .fourbox {
+    top: 400px;
+    left: 50px;
+    width: 140px;
+    height: 140px;
+    font-size: 0.9rem;
+  }
+
+  .common {
+    font-size: 0.9rem;
+  }
+
+  .first_text_map {
+    top: 6vh;
+    left: 31vw;
+  }
+
+  .second_text_map {
+    top: 16vh;
+    right: 24vw;
+  }
+
+  .third_text_map {
+    top: 36vh;
+    left: 18vw;
+  }
+
+  .forth_text_map {
+    top: 47vh;
+    left: 32vw;
+  }
+
+  .five_text_map {
+    top: 40vh;
+    right: 33vw;
+  }
+
+  .six_text_map {
+    top: 38vh;
+    right: 18vw;
+  }
+
+  .seven_text_map {
+    bottom: 7vh;
+    left: 35vw;
+  }
+
+  .eight_text_map {
+    bottom: 10vh;
     right: 28vw;
   }
 }

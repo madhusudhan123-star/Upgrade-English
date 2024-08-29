@@ -7,7 +7,7 @@ const MapComponent = () => {
     const mapRef = useRef(null);
 
     useEffect(() => {
-        const map = L.map(mapRef.current).setView([51.519743, -0.115496], 15);
+        const map = L.map(mapRef.current).setView([17.490833, 78.625833], 15);
 
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'

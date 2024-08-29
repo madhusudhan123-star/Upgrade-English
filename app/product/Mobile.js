@@ -7,6 +7,7 @@ import Tour from './tour';
 import { AlertCircle } from 'lucide-react';
 
 const Mobile = () => {
+    const [showreview, setShowreview] = useState(false);
     const [isRotating, setIsRotating] = useState(false);
     const [isRotating1, setIsRotating1] = useState(false);
     const [isEdited, setIsEdited] = useState(false);
@@ -54,6 +55,7 @@ const Mobile = () => {
         const intervalId = setInterval(() => {
             localStorage.setItem('hasSubmitted', 'false');
             setShowSharePopup(true);
+            setShowreview(true);
         }, 5 * 60 * 1000); // 5 minutes in milliseconds
 
         isMobileRef.current = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
@@ -99,6 +101,8 @@ const Mobile = () => {
         } else {
             setError('Speech recognition is not supported in this browser.');
         }
+        const savedReviews = JSON.parse(localStorage.getItem('topReviews') || '[]');
+        setTrackhistory(savedReviews);
 
         return () => {
             clearInterval(intervalId);
@@ -108,6 +112,10 @@ const Mobile = () => {
         };
     }, [listening]);
 
+    const saveTopReviews = (reviews) => {
+        const topReviews = reviews.slice(-10); // Keep only the last 10 reviews
+        localStorage.setItem('topReviews', JSON.stringify(topReviews));
+    };
     const handleTranscriptChange = (event) => {
         setIsEdited(true);
         setEditableTranscript(event.target.value);
@@ -144,9 +152,9 @@ const Mobile = () => {
     };
 
     const getReviewColor = (rating) => {
-        if (rating < 5) return 'text-red-500';
-        if (rating < 7) return 'text-yellow-500';
-        return 'text-green-500';
+        if (rating < 5) return 'text-red-800'; // Darker red
+        if (rating < 7) return 'text-amber-700'; // Darker amber
+        return 'text-green-700'; // Darker green
     };
 
     const renderReview = (reviewText) => {
@@ -275,17 +283,51 @@ const Mobile = () => {
         }
     };
 
+
+    const MAX_REVIEWS = 10;
+
+    const extractRating = (review) => {
+        const match = review.match(/Overall Rating: (\d+)/);
+        return match ? parseInt(match[1]) : 0;
+    };
+
     const Resetall = () => {
-        setTrackhistory(prev => [...prev, review]);
+        if (review.length > 0 && review !== "No valid speech detected. Please provide some input for analysis.") {
+            const newRating = extractRating(review);
+            let newTrackHistory = [review, ...trackhistory]; // Add new review at the top
+
+            if (newTrackHistory.length > MAX_REVIEWS) {
+                // Find the lowest rated review
+                let lowestRatingIndex = 1; // Start from 1 to exclude the newly added review
+                let lowestRating = extractRating(newTrackHistory[1]);
+
+                for (let i = 2; i < newTrackHistory.length; i++) {
+                    const currentRating = extractRating(newTrackHistory[i]);
+                    if (currentRating < lowestRating) {
+                        lowestRating = currentRating;
+                        lowestRatingIndex = i;
+                    }
+                }
+
+                // If the new review has a higher rating than the lowest, replace the lowest
+                if (newRating > lowestRating) {
+                    newTrackHistory.splice(lowestRatingIndex, 1);
+                } else {
+                    // If not, remove the last review
+                    newTrackHistory.pop();
+                }
+            }
+
+            setTrackhistory(newTrackHistory);
+            saveTopReviews(newTrackHistory);
+        }
         setReview('');
         setEditableTranscript('');
         if (recognitionRef.current) {
             recognitionRef.current.stop();
         }
         setListening(false);
-        setIsRotating(false);
     };
-
     const toggleRotation1 = () => {
         setIsRotating1(prev => !prev);
         if (isRotating1) {
@@ -351,6 +393,8 @@ const Mobile = () => {
                     setMessage(localMessage);
                     setShowSharePopup(false);
                     setHasSubmitted(true);
+                    setShowreview(true);
+
                     localStorage.setItem('hasSubmitted', 'true');
                 } else {
                     setLocalSubmitStatus(`Failed to submit review: ${data.error}`);
@@ -364,7 +408,7 @@ const Mobile = () => {
         return (
             <Modal
                 isOpen={showSharePopup && !hasSubmitted}
-                onRequestClose={() => setShowSharePopup(false)}
+                onRequestClose={() => { setShowSharePopup(false); setShowreview(true); }}
                 contentLabel="Share Review"
                 className="Modal bg-white  p-6 rounded-lg shadow-lg max-w-md mx-auto mt-20"
                 overlayClassName="Overlay fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center"
@@ -404,7 +448,7 @@ const Mobile = () => {
                         </button>
                         <button
                             type="button"
-                            onClick={() => setShowSharePopup(false)}
+                            onClick={() => { setShowSharePopup(false); setShowreview(true); }}
                             className="bg-gray-300 text-gray-700 px-4 py-2 rounded hover:bg-gray-400"
                         >
                             Close
@@ -420,9 +464,9 @@ const Mobile = () => {
                 onClick={() => setRunTour(true)}
                 className="absolute top-20 right-4 glass-background font-bold py-2 px-4 rounded"
             >
-                Start Tour
+                How It Works
             </button>
-            <div className='w-screen overflow-x-hidden pl-10 pr-16'>
+            <div className='w-screen overflow-x-hidden pl-10 pr-6'>
                 <Navbar onMobileMenuToggle={handleMobileMenuToggle} />
             </div>
             <div className='bg-orange-300 w-full h-full'>
@@ -486,7 +530,7 @@ const Mobile = () => {
                         </button>
                     </div>
                     <div className="review-history mt-8 max-w-4xl mx-auto h-full">
-                        <h2 className="text-2xl font-bold mb-4 h-32">Review History</h2>
+                        <h2 className="text-2xl font-bold mb-4 h-32">Review History (Last 10)</h2>
                         {trackhistory.map((review, index) => (
                             <div key={index} className="mb-4">
                                 <h3 className="font-bold">Review {index + 1}</h3>
@@ -495,8 +539,8 @@ const Mobile = () => {
                         ))}
                     </div>
                 </Modal>
-                <SharePopup className='bg-orange-300' />
-                <Tour run={runTour} setRun={setRunTour} className='bg-orange-300' />
+                {showreview && <SharePopup className='bg-orange-300' />}
+                {microphonePermission === 'denied' ? "" : <Tour run={runTour} setRun={setRunTour} className='bg-orange-300' />}
             </div>
         </div>
     );

@@ -75,12 +75,12 @@ const MobileLayout = () => {
                     </div>
                 </div>
                 <div className='w-full h-full'>
-                    <div className='absolute top-0 left-0 w-full h-[50vh] flex flex-col justify-between glass-background px-10 pt-10'>
-                        <h1 className='font-light text-white text-4xl text-center'>By Correct pronounce only you can speak better </h1>
+                    <div className='absolute top-0 left-0 w-full h-[60vh] flex flex-col justify-between glass-background p-1 items-center m-[auto]'>
+                        <h1 className='font-light text-white text-3xl text-center'>By Correct pronounce only you can speak better </h1>
                         <a href='/home'>
-                            <buttom className="font-light text-black text-4xl  text-center glass-background px-10 py-5">Go to Home</buttom>
+                            <buttom className="font-light text-black text-2xl  text-center glass-background p-[5vw]">Go to Home</buttom>
                         </a>
-                        <div className='flex w-full '>
+                        <div className='flex w-full'>
                             <div className='w-5 h-10'>
                                 <Image src="/util/img/warning.svg" width={80} height={80} alt="arrow" className="arrow" />
                             </div>

@@ -573,14 +573,14 @@ export default function Home() {
                                 <Image src="/util/img/arr37.svg" width={50} height={50} alt="arrow" className="w-16 md:w-24 rotate-[-40deg]" />
                             </div>
                         </div>
-                        <p className="absolute first_text_map">Mastery</p>
-                        <p className="absolute second_text_map">Proficiency</p>
-                        <p className="absolute third_text_map">Versatility</p>
-                        <p className="absolute forth_text_map">Confidence</p>
-                        <p className="absolute five_text_map">Comprehension</p>
-                        <p className="absolute six_text_map">Articulation</p>
-                        <p className="absolute seven_text_map">Eloquence</p>
-                        <p className="absolute eight_text_map">Fluency</p>
+                        <p className="absolute  common first_text_map">Mastery</p>
+                        <p className="absolute common second_text_map">Proficiency</p>
+                        <p className="absolute common third_text_map">Versatility</p>
+                        <p className="absolute common forth_text_map">Confidence</p>
+                        <p className="absolute common five_text_map">Comprehension</p>
+                        <p className="absolute common six_text_map">Articulation</p>
+                        <p className="absolute common seven_text_map">Eloquence</p>
+                        <p className="absolute common eight_text_map">Fluency</p>
                     </div>
                 </div>
             </div>
