@@ -96,13 +96,13 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <Head>
+      <head>
         <meta name="google-site-verification" content="OBrLKpKEJEhiKAk42_o4y81KFWxsh5jihhVT3KZU7-w" />
         <meta name="google-adsense-account" content="ca-pub-4476899930876130" />
         <meta name="keywords" content="AI English speaking feedback, Improve English pronunciation online, Self-learning English course, English fluency improvement, AI-powered language learning, English speaking practice for job interviews, Non-native English speaker tool, Perfect your English accent" />
         <meta name="description" content="Enhance your English speaking skills with our AI-powered self-learning course. Perfect for students, job seekers, and non-native speakers. Get instant feedback on your pronunciation and fluency." />
         <link rel="icon" href="/favicon.ico" />
-      </Head>
+      </head>
       <body className={inter.className}>
         {children}
 
